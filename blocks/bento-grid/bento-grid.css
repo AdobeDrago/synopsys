@@ -1,0 +1,111 @@
+/* measured from the source "The Latest from Ansys" section at 1440px: 850px, two 355px rows */
+main > .section.bento-grid-container {
+  overflow: hidden;
+  padding: 30px 0 60px;
+}
+
+.section.bento-grid-container > .default-content-wrapper h2 {
+  margin: 8px 0;
+  color: var(--color-black);
+  font-size: 28px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* gradient rules either side of the heading, 12vw wide */
+.section.bento-grid-container > .default-content-wrapper h2::before,
+.section.bento-grid-container > .default-content-wrapper h2::after {
+  content: "";
+  position: relative;
+  display: inline-block;
+  width: 12vw;
+  height: 2px;
+  vertical-align: middle;
+}
+
+.section.bento-grid-container > .default-content-wrapper h2::before {
+  right: 32px;
+  margin: 0 0 0 -50%;
+  background-image: linear-gradient(to left, rgb(115 114 113), rgb(217 216 214));
+}
+
+.section.bento-grid-container > .default-content-wrapper h2::after {
+  left: 32px;
+  margin: 0 -50% 0 0;
+  background-image: linear-gradient(to right, rgb(115 114 113), rgb(217 216 214));
+}
+
+.bento-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* half / quarter / quarter, then quarter / quarter / half */
+.bento-grid-col {
+  position: relative;
+  box-sizing: border-box;
+  width: 25%;
+  height: 355px;
+}
+
+.bento-grid-col:nth-child(6n + 1),
+.bento-grid-col:nth-child(6n) {
+  width: 50%;
+}
+
+.bento-grid-link {
+  display: block;
+  margin: 35px 16px 0;
+}
+
+/* bottom-up darkening over the whole column (source: teaser link ::after) */
+.bento-grid-link::after {
+  content: "";
+  position: absolute;
+  inset: 0 16px;
+  display: block;
+  background-image: linear-gradient(0deg, rgb(0 0 0), rgb(0 0 0 / 0%) 65%);
+}
+
+.bento-grid-media {
+  height: 320px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.bento-grid-media img {
+  display: inline;
+  width: 100%;
+  height: 100%;
+  border-radius: 2%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.bento-grid-title {
+  position: absolute;
+  z-index: 1;
+  bottom: 15px;
+  left: 50px;
+  max-width: 80%;
+  margin: 0 0 21px;
+  color: var(--color-white);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* at 1280px and below the source shortens the tiles: 195px images, titles 5px from the bottom */
+@media (width <= 1280px) {
+  .bento-grid-col {
+    height: 230px;
+  }
+
+  .bento-grid-media {
+    height: 195px;
+  }
+
+  .bento-grid-title {
+    bottom: 5px;
+  }
+}

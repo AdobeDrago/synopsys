@@ -1,0 +1,71 @@
+/* measured from the source banner at 1440px: 85px tall, centered logo + message + link */
+.promo-strip {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 85px;
+  padding: 0 50px;
+  background-image: linear-gradient(82deg, rgb(57 9 97) -4.89%, rgb(77 23 123) 31.39%, rgb(123 12 188) 62.87%, rgb(253 183 26) 100.22%);
+}
+
+.promo-strip-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 32px 0 0;
+}
+
+.promo-strip-logo img {
+  display: block;
+  max-width: 125px;
+}
+
+.promo-strip-nav {
+  display: flex;
+  align-items: center;
+}
+
+.promo-strip-nav p {
+  max-width: 600px;
+  margin: 0 34px 0 0;
+  color: var(--color-white);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 27px;
+  text-align: center;
+}
+
+.promo-strip-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 2x20 divider before the link */
+.promo-strip-nav ul::before {
+  content: "";
+  position: absolute;
+  display: flex;
+  width: 2px;
+  height: 20px;
+  margin: 6px 0 0 -15px;
+  background-color: rgb(255 255 255 / 10%);
+}
+
+.promo-strip-nav li {
+  margin: 4px 0 0 5px;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.promo-strip-nav a:any-link {
+  color: var(--color-white);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 27px;
+}
+
+.promo-strip-nav a:any-link::after {
+  content: url("../../icons/arrow-right.svg");
+  margin: 0 0 0 3px;
+}

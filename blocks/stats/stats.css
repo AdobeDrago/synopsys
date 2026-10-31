@@ -1,0 +1,99 @@
+/* measured from the source "quickspecs" section at 1440px: 487px tall over a repeating hex tile */
+main > .section.stats-container {
+  background-image: var(--stats-background, none);
+  background-position: 0% 0%;
+  background-repeat: repeat;
+  background-size: auto;
+  position: relative;
+}
+
+/* white fade over the middle of the pattern; content stays above it via position:relative */
+main > .section.stats-container::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image: linear-gradient(90deg, rgb(255 255 255 / 0%), rgb(255 255 255) 35%, rgb(255 255 255) 75%, rgb(255 255 255 / 0%));
+}
+
+main > .section.stats-container > div {
+  position: relative;
+}
+
+.section.stats-container > .default-content-wrapper {
+  box-sizing: border-box;
+  width: var(--content-width);
+  margin: 0 auto;
+  padding: 96px 36px 32px;
+}
+
+.section.stats-container > .default-content-wrapper h2 {
+  margin: 0 0 24px;
+  color: var(--color-black);
+  font-size: 32px;
+  line-height: 1.2; /* 38.4px; the source's unitless value rounds down to 1/64px */
+  text-align: center;
+}
+
+.stats {
+  display: flex;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 918px;
+  margin: 0 auto;
+  padding: 0 0 80px;
+}
+
+.stats-tile {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 306px;
+  padding: 0 40px;
+}
+
+/* inline image like the source; top alignment keeps the line box at the image height */
+.stats-image {
+  display: inline;
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+/* flex row like the source: makes the title's height definite so the asterisk's % offsets resolve */
+.stats-content {
+  display: flex;
+}
+
+.stats-title {
+  margin: 0 0 13.5px;
+  padding: 10px 0 0;
+  color: var(--color-black);
+  font-size: 18px;
+  line-height: 21.6px;
+  text-transform: uppercase;
+}
+
+/* nudged up/left relative to the title box, as in the source */
+.stats-asterisk {
+  position: relative;
+  right: 2%;
+  bottom: 12%;
+  color: var(--color-link);
+  font-family: var(--heading-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16.8px;
+  cursor: pointer;
+}
+
+.stats-note {
+  display: none;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.stats-asterisk[aria-expanded="true"] ~ .stats-note,
+.stats-content:has(.stats-asterisk[aria-expanded="true"]) .stats-note {
+  display: block;
+}

@@ -1,0 +1,227 @@
+/* measured from the source "Explore Ansys Possibilities" section at 1440px: 892px, black */
+main > .section.product-carousel-container {
+  background-color: var(--color-black);
+}
+
+.section.product-carousel-container > .default-content-wrapper {
+  padding: 38px 0 40px;
+}
+
+.section.product-carousel-container > .default-content-wrapper h2 {
+  box-sizing: border-box;
+  width: 930px;
+  margin: 0 auto;
+  font-size: 32px;
+  line-height: 1.2; /* 38.4px; the source's unitless value rounds down to 1/64px */
+  text-align: center;
+}
+
+.section.product-carousel-container > .default-content-wrapper h2 span {
+  color: var(--color-white);
+}
+
+/* gradient rules either side of the heading */
+.section.product-carousel-container > .default-content-wrapper h2::before,
+.section.product-carousel-container > .default-content-wrapper h2::after {
+  content: "";
+  position: relative;
+  display: inline-block;
+  width: 12vw; /* 172.8px at 1440, 153.6px at 1280, as in the source */
+  height: 2px;
+  vertical-align: middle;
+}
+
+.section.product-carousel-container > .default-content-wrapper h2::before {
+  right: 32px;
+  margin: 0 0 0 -465px;
+  background-image: linear-gradient(to left, rgb(217 216 214), rgb(115 114 113));
+}
+
+.section.product-carousel-container > .default-content-wrapper h2::after {
+  left: 32px;
+  margin: 0 -465px 0 0;
+  background-image: linear-gradient(to right, rgb(217 216 214), rgb(115 114 113));
+}
+
+.product-carousel-viewport {
+  overflow: hidden;
+}
+
+.product-carousel-track {
+  display: flex;
+  padding-left: 32px;
+  transition: transform 0.5s ease;
+}
+
+.product-carousel-tile {
+  position: relative;
+  flex: 0 0 auto;
+  width: 627px; /* set by JS to ceil(viewport / 2.3), like the source carousel */
+  height: 640px;
+}
+
+.product-carousel-media {
+  position: relative;
+  height: 100%;
+}
+
+.product-carousel-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgb(0 0 0 / 8%) 0, rgb(0 0 0 / 75%) 54.35%);
+}
+
+.product-carousel-media img {
+  display: block;
+  border-radius: 10px;
+  width: 98%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+.product-carousel-content {
+  position: absolute;
+  z-index: 1;
+  right: 2%;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px 32px;
+}
+
+.product-carousel-title {
+  margin: 0 0 12px;
+  color: var(--color-gold);
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword -- computed value must match the source exactly */
+  font-family: Montserrat;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 34px;
+}
+
+.product-carousel-subtitle {
+  color: var(--color-gray-light);
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword -- computed value must match the source exactly */
+  font-family: Montserrat;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+.product-carousel-description {
+  padding: 12px 0 0;
+}
+
+.product-carousel-description > p {
+  margin: 0 0 16px;
+  overflow: hidden;
+  color: var(--color-gray-light);
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword -- computed value must match the source exactly */
+  font-family: "Source Sans Pro";
+  font-size: 20px;
+  line-height: normal;
+}
+
+.product-carousel-white {
+  color: var(--color-white);
+}
+
+.product-carousel-panel {
+  display: none;
+  padding: 24px;
+}
+
+.product-carousel-tile.open .product-carousel-panel {
+  display: block;
+}
+
+.product-carousel-panel ul {
+  margin: 0 0 16px;
+  padding: 0 0 0 20px;
+  color: var(--color-white);
+}
+
+.product-carousel-panel li {
+  margin: 0 0 8px;
+}
+
+.product-carousel-panel li a:any-link {
+  color: var(--color-white);
+}
+
+/* 40px row: 8px padding around a 24px line; the chevron sits on that line's baseline */
+.product-carousel-toggle {
+  display: flex;
+  align-self: stretch;
+  justify-content: center;
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: var(--color-white);
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.product-carousel-tile.open .product-carousel-toggle svg {
+  transform: rotate(180deg);
+}
+
+.product-carousel-nav {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 40px 0;
+}
+
+.product-carousel-nav button {
+  position: relative;
+  box-sizing: border-box;
+  width: 56px;
+  height: 56px;
+  padding: 1px 6px;
+  border: 1px solid var(--color-white);
+  border-radius: 100%;
+  background: none;
+  color: transparent;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.product-carousel-nav button::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border-right: 2px solid var(--color-white);
+  border-bottom: 2px solid var(--color-white);
+}
+
+.product-carousel-prev::after {
+  inset: 18px 15px 18px 21px;
+  transform: rotate(135deg);
+}
+
+.product-carousel-next::after {
+  inset: 18px 24px 18px 12px;
+  transform: rotate(-45deg);
+}
+
+.product-carousel-nav button:disabled {
+  border-color: rgb(167 167 167);
+  cursor: default;
+}
+
+.product-carousel-nav button:disabled::after {
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-color: rgb(167 167 167);
+}
