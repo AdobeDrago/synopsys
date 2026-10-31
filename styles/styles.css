@@ -16,8 +16,11 @@
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --link-color: #0b5cab;
+  --link-hover-color: #08407a;
+  --accent-color: #ffb71b;
+  --accent-hover-color: #e5a000;
+  --dark-bg: #0a0a0a;
 
   /* fonts */
   --body-font-family: roboto, roboto-fallback, sans-serif;
@@ -322,4 +325,42 @@ main .section.highlight {
   background-color: var(--light-color);
   margin: 0;
   padding: 40px 0;
+}
+
+/* Ansys branding */
+a.button.primary,
+button.button.primary {
+  background-color: var(--accent-color);
+  color: var(--dark-bg);
+  border-radius: 2px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 14px;
+}
+
+a.button.primary:hover,
+button.button.primary:hover {
+  background-color: var(--accent-hover-color);
+  color: var(--dark-bg);
+  text-decoration: none;
+}
+
+main .section.dark {
+  background-color: var(--dark-bg);
+  color: #fff;
+}
+
+main .section.dark h2,
+main .section.dark h3,
+main .section.dark p {
+  color: #fff;
+}
+
+main .section.dark a:any-link:not(.button) {
+  color: var(--accent-color);
+}
+
+main .section h2 {
+  text-align: center;
 }
