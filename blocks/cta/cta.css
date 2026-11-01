@@ -40,3 +40,296 @@ main > .section.cta-container {
 .cta-content p.button-wrapper {
   margin: 0;
 }
+
+/* product variants (Fluent pages): compact, band, video. Measured at 1440 and 1280px. */
+body.product main > .section.cta-container {
+  padding: 0;
+  background-image: none;
+}
+
+body.product main > .section.cta-container:has(.cta.compact, .cta.band, .cta.video) {
+  background-color: var(--product-ink);
+}
+
+.cta.compact,
+.cta.band,
+.cta.video {
+  position: relative;
+  box-sizing: border-box;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  color: rgb(252 252 252);
+}
+
+:is(.cta.compact, .cta.band, .cta.video) * {
+  box-sizing: border-box;
+}
+
+:is(.cta.compact, .cta.band, .cta.video) h2,
+:is(.cta.compact, .cta.band, .cta.video) h3 {
+  margin: 0;
+  color: rgb(252 252 252);
+  font-family: var(--product-heading-stack);
+  font-weight: 800;
+}
+
+:is(.cta.compact, .cta.band, .cta.video) .cta-text p {
+  margin: 0;
+}
+
+:is(.cta.compact, .cta.band, .cta.video) .cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* compact: 152px black bar */
+.cta.compact .cta-inner {
+  padding: 48px 64px;
+  background-color: rgb(0 0 0);
+}
+
+.cta.compact .cta-frame {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.cta.compact .cta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 64px;
+}
+
+.cta.compact .cta-heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cta.compact h2 {
+  font-size: 30px;
+  line-height: 37.5px;
+  text-align: left;
+}
+
+.cta.compact .cta-actions {
+  justify-content: center;
+}
+
+/* band: heading 5/12 | text + button 7/12 */
+.cta.band .cta-inner {
+  padding: 128px 64px;
+}
+
+.cta.band .cta-frame {
+  max-width: 1660px;
+}
+
+.cta.band .cta-row {
+  display: flex;
+  gap: 48px;
+}
+
+.cta.band .cta-heading {
+  display: flex;
+  flex: 5 1 0%;
+}
+
+.cta.band .cta-body {
+  display: flex;
+  flex: 7 1 0%;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.cta.band h2 {
+  font-size: 48px;
+  line-height: 60px;
+}
+
+.cta.band .cta-text {
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+/* video: centered copy over the Vidyard background, at least 660px */
+.cta.video {
+  text-align: center;
+}
+
+.cta.video .cta-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 660px;
+  padding: 80px 64px;
+}
+
+.cta.video .cta-frame {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
+
+.cta.video .cta-row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+  text-align: center;
+}
+
+.cta.video .cta-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cta.video h2 {
+  color: var(--product-gold);
+  font-size: 24px;
+  line-height: 33px;
+}
+
+.cta.video h3 {
+  font-size: 36px;
+  line-height: 45px;
+}
+
+/* featured: rounded image card with copy and a play button over it */
+.cta.featured {
+  box-sizing: border-box;
+  width: auto;
+  margin: 0;
+  padding: 80px 64px;
+}
+
+.cta.featured .cta-box {
+  position: relative;
+  max-width: 2020px;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: rgb(0 0 0);
+  mask-image: url("../../icons/p-featured-mask.svg");
+  mask-position: 50% 50%;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+.cta.featured .cta-box > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.cta.featured .cta-overlay {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 96px;
+  padding: 224px 48px;
+}
+
+.cta.featured .cta-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 576px;
+  color: rgb(255 255 255);
+}
+
+.cta.featured h2 {
+  margin: 0;
+  color: rgb(255 255 255);
+  font-family: var(--product-heading-stack);
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 60px;
+}
+
+.cta.featured .cta-heading p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: calc(28 / 18);
+}
+
+.cta.featured .cta-play {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.cta.featured .product-play {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  fill: rgb(255 255 255 / 80%);
+}
+
+@media (width <= 1280px) {
+  .cta.featured h2 {
+    font-size: 52px;
+    line-height: 52px;
+  }
+
+  .cta.featured .cta-heading p {
+    font-size: 16px;
+  }
+}
+
+@media (width <= 1280px) {
+  .cta.compact h2 {
+    font-size: 26px;
+    line-height: 32.5px;
+  }
+
+  .cta.band h2 {
+    font-size: 42px;
+    line-height: 52.5px;
+  }
+
+  .cta.band .cta-text {
+    font-size: 26px;
+  }
+
+  .cta.video h2 {
+    font-size: 20px;
+    line-height: 27.5px;
+  }
+
+  .cta.video h3 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+/* below the scored desktop widths: stack */
+@media (width < 1024px) {
+  .cta.compact .cta-row,
+  .cta.band .cta-row {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  :is(.cta.compact, .cta.band, .cta.video) .cta-inner {
+    padding-inline: 24px;
+  }
+}

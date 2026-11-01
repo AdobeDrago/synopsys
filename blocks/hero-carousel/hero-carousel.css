@@ -142,3 +142,142 @@
   text-align: left;
   cursor: pointer;
 }
+
+/* product variant (Fluent pages): single hero, measured at 1440 and 1280px.
+   Text heroes are 700px with left-aligned copy; the video hero centers its copy. */
+main > .section.hero-carousel-container:has(.product) {
+  background-color: var(--product-ink);
+}
+
+.hero-carousel.product {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  overflow: visible;
+  background-color: transparent;
+  color: rgb(252 252 252);
+}
+
+.hero-carousel.product * {
+  box-sizing: border-box;
+}
+
+.hero-carousel.product .hero-carousel-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 700px;
+  padding: 128px 64px;
+}
+
+.hero-carousel.product .hero-carousel-frame {
+  width: 100%;
+  max-width: 1660px;
+}
+
+.hero-carousel.product .hero-carousel-article,
+.hero-carousel.product .hero-carousel-heading,
+.hero-carousel.product .hero-carousel-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-carousel.product .hero-carousel-article {
+  gap: 24px;
+  max-width: 1024px;
+}
+
+.hero-carousel.product .hero-carousel-heading {
+  gap: 12px;
+}
+
+.hero-carousel.product .hero-carousel-body {
+  gap: 48px;
+}
+
+.hero-carousel.product h1,
+.hero-carousel.product h2 {
+  margin: 0;
+  color: rgb(252 252 252);
+  font-family: var(--product-heading-stack);
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 60px;
+}
+
+.hero-carousel.product.hero-carousel-eyebrow h1 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.5px;
+}
+
+.hero-carousel.product .hero-carousel-text {
+  font-size: 24px;
+  line-height: calc(4 / 3);
+}
+
+.hero-carousel.product .hero-carousel-text p {
+  margin: 0;
+}
+
+.hero-carousel.product .hero-carousel-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* video hero: copy centered over the poster, content height (608px at 1440) */
+.hero-carousel.product.hero-carousel-has-media {
+  text-align: center;
+}
+
+.hero-carousel.product.hero-carousel-has-media .hero-carousel-inner {
+  min-height: 0;
+}
+
+.hero-carousel.product.hero-carousel-has-media .hero-carousel-frame {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.hero-carousel.product.hero-carousel-has-media .hero-carousel-article {
+  align-items: center;
+  gap: 32px;
+  max-width: none;
+}
+
+.hero-carousel.product.hero-carousel-has-media .hero-carousel-heading {
+  align-items: center;
+  gap: 32px;
+}
+
+.hero-carousel.product.hero-carousel-has-media .hero-carousel-body {
+  align-items: center;
+}
+
+.hero-carousel.product.hero-carousel-has-media .hero-carousel-text {
+  /* 50ch in Montserrat (0.64613em per "0"): 775.36px at 24px, 646.13px at 20px */
+  max-width: 32.3065em;
+}
+
+.hero-carousel.product.hero-carousel-has-media h1 {
+  color: var(--product-gold);
+  font-weight: 800;
+}
+
+@media (width <= 1280px) {
+  .hero-carousel.product h1,
+  .hero-carousel.product h2 {
+    font-size: 42px;
+    line-height: 52.5px;
+  }
+
+  .hero-carousel.product.hero-carousel-eyebrow h1 {
+    font-size: 18px;
+    line-height: 24.75px;
+  }
+
+  .hero-carousel.product .hero-carousel-text {
+    font-size: 20px;
+  }
+}

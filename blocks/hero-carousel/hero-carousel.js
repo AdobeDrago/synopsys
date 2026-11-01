@@ -1,4 +1,5 @@
 import linkToImage, { wrapButtonLabels } from '../../scripts/scene7.js';
+import { decorateProductButtons, vidyardBackground } from '../../scripts/product.js';
 
 // timings measured on the source carousel: 10s autoplay, 500ms linear crossfade
 const AUTOPLAY_MS = 10000;
@@ -17,7 +18,75 @@ function buildTitle(h) {
   h.append(title);
 }
 
+/**
+ * Product variant: a single hero (no tabs, no autoplay). Cells: [media] | content.
+ * Media is an image link or a Vidyard link; a media hero centers its copy over it.
+ */
+function decorateProduct(block) {
+  const row = block.firstElementChild;
+  const cells = row ? [...row.children] : [];
+  const content = cells[cells.length - 1];
+  const media = cells.length > 1 ? cells[0] : null;
+
+  const parts = [];
+  if (media) {
+    let bg = vidyardBackground(media);
+    if (bg) {
+      bg.querySelector('img').loading = 'eager';
+      bg.querySelector('img').fetchPriority = 'high';
+    } else {
+      const img = linkToImage(media, { eager: true });
+      if (img) {
+        bg = document.createElement('div');
+        bg.className = 'product-video-bg';
+        bg.append(img);
+      }
+    }
+    if (bg) {
+      block.classList.add('hero-carousel-has-media');
+      parts.push(bg);
+    }
+  }
+
+  const heading = document.createElement('div');
+  heading.className = 'hero-carousel-heading';
+  const body = document.createElement('div');
+  body.className = 'hero-carousel-body';
+  const text = document.createElement('div');
+  text.className = 'hero-carousel-text';
+  const actions = document.createElement('div');
+  actions.className = 'hero-carousel-actions';
+  if (content) {
+    [...content.children].forEach((el) => {
+      if (/^H[1-6]$/.test(el.tagName)) heading.append(el);
+      else if (el.querySelector('a.button')) actions.append(...el.querySelectorAll('a.button'));
+      else text.append(el);
+    });
+  }
+  // h1 above an h2 is the eyebrow line
+  if (heading.querySelector('h1 + h2')) block.classList.add('hero-carousel-eyebrow');
+  decorateProductButtons(actions);
+  if (text.children.length) body.append(text);
+  if (actions.children.length) body.append(actions);
+
+  const article = document.createElement('div');
+  article.className = 'hero-carousel-article';
+  article.append(heading, body);
+  const frame = document.createElement('div');
+  frame.className = 'hero-carousel-frame';
+  frame.append(article);
+  const inner = document.createElement('div');
+  inner.className = 'hero-carousel-inner';
+  inner.append(frame);
+  parts.push(inner);
+  block.replaceChildren(...parts);
+}
+
 export default function decorate(block) {
+  if (block.classList.contains('product')) {
+    decorateProduct(block);
+    return;
+  }
   const slides = document.createElement('div');
   slides.className = 'hero-carousel-slides';
   const tabs = document.createElement('ul');

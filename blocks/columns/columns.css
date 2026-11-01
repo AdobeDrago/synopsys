@@ -31,3 +31,216 @@
     order: unset;
   }
 }
+
+/* media variant (product pages): copy beside a rounded video/image, measured at 1440/1280 */
+.columns.media {
+  box-sizing: border-box;
+  max-width: 1660px;
+  padding: 80px 64px;
+}
+
+.columns.media * {
+  box-sizing: border-box;
+}
+
+.columns.media .columns-media-row {
+  display: flex;
+  gap: 64px;
+  padding: 0 0 0 48px;
+}
+
+/* media first: the 48px inset moves to the copy side */
+.columns.media .columns-media-row:has(> .columns-media-figure:first-child) {
+  padding: 0 48px 0 0;
+}
+
+.columns.media .columns-media-row > * {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.columns.media .columns-media-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 48px;
+}
+
+.columns.media .columns-media-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.columns.media .columns-media-icon {
+  margin: 0;
+  line-height: 0;
+}
+
+.columns.media .columns-media-icon-svg {
+  display: block;
+  width: 36px;
+  height: 36px;
+  fill: var(--product-gold);
+}
+
+.columns.media .product-eyebrow {
+  margin: 0;
+  color: inherit;
+  font-family: var(--product-heading-stack);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.5px;
+}
+
+.columns.media h2 {
+  margin: 0;
+  color: inherit;
+  font-family: var(--product-heading-stack);
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 45px;
+}
+
+.columns.media .columns-media-header > p {
+  margin: 0;
+  font-size: 24px;
+  line-height: calc(4 / 3);
+}
+
+.columns.media .columns-media-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.columns.media .columns-media-figure {
+  position: relative;
+  align-self: flex-start;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  background-color: rgb(0 0 0);
+}
+
+.columns.media .columns-media-figure:has(.product-video-bg) {
+  text-align: center;
+}
+
+.columns.media .columns-media-figure .product-video-bg {
+  background: none;
+}
+
+.columns.media .columns-media-figure .product-video-bg img {
+  opacity: 1;
+}
+
+.columns.media .columns-media-figure .product-video-bg iframe {
+  opacity: 1;
+}
+
+.columns.media .columns-media-figure img:not(.product-video-bg img) {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* feature list: icon, title, text rows between 2px rules */
+.columns.media .columns-media-features {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.columns.media .columns-media-features li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 56px 36px 0;
+  border-top: 2px solid var(--columns-media-rule, rgb(193 194 193));
+  border-bottom: 2px solid var(--columns-media-rule, rgb(193 194 193));
+}
+
+.columns.media .columns-media-feature {
+  display: flex;
+  gap: 24px;
+}
+
+.columns.media .columns-media-feature figure {
+  margin: 0;
+}
+
+.columns.media .columns-media-feature-icon {
+  display: block;
+  width: 30px;
+  height: 30px;
+  fill: currentcolor;
+}
+
+.columns.media .columns-media-feature-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns.media .columns-media-feature-text :is(h5, h6) {
+  margin: 0 0 8px;
+  color: inherit;
+  font-family: var(--product-heading-stack);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 27.5px;
+}
+
+.columns.media .columns-media-feature-text p {
+  margin: 0;
+  font-size: 18px;
+  line-height: calc(28 / 18);
+}
+
+@media (width <= 1280px) {
+  .columns.media .product-eyebrow {
+    font-size: 18px;
+    line-height: 24.75px;
+  }
+
+  .columns.media h2 {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .columns.media .columns-media-icon-svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .columns.media .columns-media-feature-icon {
+    width: 26px;
+    height: 26px;
+  }
+
+  .columns.media .columns-media-feature-text :is(h5, h6) {
+    font-size: 18px;
+    line-height: 24.75px;
+  }
+
+  .columns.media .columns-media-feature-text p {
+    font-size: 16px;
+  }
+
+  .columns.media .columns-media-header > p {
+    font-size: 20px;
+  }
+}
+
+@media (width < 1024px) {
+  .columns.media {
+    padding: 48px 24px;
+  }
+
+  .columns.media .columns-media-row {
+    flex-direction: column;
+    padding: 0;
+  }
+}

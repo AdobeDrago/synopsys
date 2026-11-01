@@ -25,3 +25,127 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* keypoints variant (product pages): 2-column grid of icon, title and text, measured at 1440/1280 */
+.cards.keypoints > ul {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 96px 48px;
+}
+
+.cards.keypoints > ul > li {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 768px;
+  border: 0;
+  background: none;
+}
+
+.cards.keypoints figure {
+  margin: 0;
+  line-height: 0;
+}
+
+.cards.keypoints .cards-keypoint-icon {
+  display: block;
+  width: 48px;
+  height: 48px;
+  color: var(--product-gold);
+  fill: currentcolor;
+}
+
+.cards.keypoints h4 {
+  margin: 0;
+  color: var(--product-ink);
+  font-family: var(--product-heading-stack);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 37.5px;
+}
+
+.cards.keypoints p {
+  margin: 0;
+  font-size: 18px;
+  line-height: calc(28 / 18);
+}
+
+@media (width <= 1280px) {
+  .cards.keypoints .cards-keypoint-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .cards.keypoints h4 {
+    font-size: 26px;
+    line-height: 32.5px;
+  }
+
+  .cards.keypoints p {
+    font-size: 16px;
+  }
+}
+
+@media (width < 768px) {
+  .cards.keypoints > ul {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+/* keypoints list: intro (default content) left, single-column list right */
+body.product main > .section.cards-container:has(.cards.list) {
+  display: flex;
+  gap: 20px;
+}
+
+/* intro column takes 646.7 / 1292 of the row after the gap (646.7 / 645.3px at 1440, as measured) */
+body.product main > .section.cards-container:has(.cards.list) > div {
+  box-sizing: border-box;
+  flex: 1 1 0%;
+  max-width: 896px;
+}
+
+body.product main > .section.cards-container:has(.cards.list) > div + div {
+  margin-top: 0;
+}
+
+body.product main > .section.cards-container:has(.cards.list) > .default-content-wrapper {
+  flex: 0 0 calc((100% - 20px) * 646.7 / 1292);
+  gap: 24px;
+  padding: 32px 80px 32px 0;
+}
+
+body.product main > .section.cards-container:has(.cards.list) > .default-content-wrapper > p:not(.product-eyebrow, .button-wrapper) {
+  font-size: 18px;
+  line-height: calc(28 / 18);
+}
+
+body.product main > .section.cards-container:has(.cards.list) > .default-content-wrapper > .button-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 0 0;
+}
+
+.cards.keypoints.list > ul {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 48px 0;
+}
+
+@media (width <= 1280px) {
+  body.product main > .section.cards-container:has(.cards.list) > .default-content-wrapper > p:not(.product-eyebrow, .button-wrapper) {
+    font-size: 16px;
+  }
+}
+
+@media (width < 1024px) {
+  body.product main > .section.cards-container:has(.cards.list) {
+    flex-direction: column;
+  }
+
+  body.product main > .section.cards-container:has(.cards.list) > .default-content-wrapper {
+    padding: 0;
+  }
+}

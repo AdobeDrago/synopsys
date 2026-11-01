@@ -9,11 +9,16 @@ const SCROLLED_AT = 52;
 const svgCache = {};
 
 // icons are inline <svg> like the source (inherit currentColor, no <img> elements)
+const PRODUCT = document.body.classList.contains('product');
+// product pages have their own header icon set (icons/p-*.svg)
+const PRODUCT_ICONS = ['globe', 'chevron', 'search', 'user', 'caret', 'trial'];
+
 function icon(name, cls) {
   const span = document.createElement('span');
   span.className = `header-icon header-icon-${cls || name}`;
-  svgCache[name] = svgCache[name] || fetch(`${ICON_BASE}/${name}.svg`).then((r) => r.text());
-  svgCache[name].then((txt) => {
+  const file = PRODUCT && PRODUCT_ICONS.includes(name) ? `p-${name}` : name;
+  svgCache[file] = svgCache[file] || fetch(`${ICON_BASE}/${file}.svg`).then((r) => r.text());
+  svgCache[file].then((txt) => {
     const svg = new DOMParser().parseFromString(txt, 'image/svg+xml').documentElement;
     svg.setAttribute('class', span.className);
     svg.setAttribute('aria-hidden', 'true');
@@ -41,6 +46,26 @@ function toggle(header, button) {
   button.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
+// breadcrumb (product pages): names from the `breadcrumb` metadata, links from the URL path
+function buildBreadcrumb() {
+  const names = (getMetadata('breadcrumb') || '').split(',').map((n) => n.trim()).filter(Boolean);
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const crumb = el('nav', 'header-breadcrumb');
+  crumb.setAttribute('aria-label', 'Breadcrumb');
+  names.forEach((name, i) => {
+    crumb.append(el('span', 'header-breadcrumb-sep', '/'));
+    const last = i === names.length - 1;
+    if (last) {
+      crumb.append(el('span', 'header-breadcrumb-current', name));
+    } else {
+      const a = el('a', 'header-breadcrumb-link', name);
+      a.href = `/${parts.slice(0, i + 1).join('/')}`;
+      crumb.append(a);
+    }
+  });
+  return crumb;
+}
+
 function buildUtility(brandSection) {
   const links = [...brandSection.querySelectorAll('a')];
   const locale = [...brandSection.querySelectorAll('p')].find((p) => !p.querySelector('a'));
@@ -56,9 +81,15 @@ function buildUtility(brandSection) {
       logos.append(a);
     }
   });
+  if (PRODUCT) logos.append(buildBreadcrumb());
   const tools = el('div', 'header-utility-tools');
   if (locale) {
-    const localeBtn = el('button', 'header-locale', icon('globe'), el('span', 'header-locale-label', locale.textContent.trim()));
+    const globe = icon('globe');
+    const label = el('span', 'header-locale-label', locale.textContent.trim());
+    // product source: unpadded button with a hidden label, padding on an inner wrapper
+    const localeBtn = PRODUCT
+      ? el('button', 'header-locale', el('span', 'sr-only', 'Countries & Regions'), el('span', 'header-locale-inner', globe, label))
+      : el('button', 'header-locale', globe, label);
     localeBtn.type = 'button';
     tools.append(localeBtn);
   }
@@ -239,7 +270,8 @@ function buildNav(header, sectionsSection) {
   const top = sectionsSection.querySelector('ul');
   [...(top ? top.children : [])].filter((li) => li.querySelector(':scope > p')).forEach((item) => {
     const label = item.querySelector(':scope > p').textContent.trim();
-    const button = el('button', 'header-nav-button', label, icon('chevron'));
+    const text = PRODUCT ? el('span', 'header-nav-label', label) : label;
+    const button = el('button', 'header-nav-button', text, icon('chevron'));
     button.type = 'button';
     button.setAttribute('aria-expanded', 'false');
     button.addEventListener('click', () => toggle(header, button));
@@ -253,12 +285,14 @@ function buildTools(header, toolsSection) {
   const search = el('a', 'header-search', icon('search'));
   search.href = '/search-results';
   search.setAttribute('aria-label', 'Search');
+  if (PRODUCT) search.append(el('span', 'sr-only', 'Search'));
   tools.append(search);
 
   const dropdown = toolsSection.querySelector('li');
   if (dropdown) {
     const label = dropdown.querySelector(':scope > p').textContent.trim();
-    const button = el('button', 'header-customers', icon('user'), el('div', 'header-customers-label', label), icon('caret'));
+    const labelEl = el(PRODUCT ? 'span' : 'div', 'header-customers-label', label);
+    const button = el('button', 'header-customers', icon('user'), labelEl, icon('caret'));
     button.type = 'button';
     button.setAttribute('aria-expanded', 'false');
     button.addEventListener('click', () => toggle(header, button));
@@ -275,7 +309,9 @@ function buildTools(header, toolsSection) {
   const trial = toolsSection.querySelector('a.button, strong a');
   if (trial) {
     trial.className = 'header-trial';
-    trial.replaceChildren(el('div', 'header-trial-label', trial.textContent.trim()), icon('trial'));
+    const trialText = trial.textContent.trim();
+    // product source: label is a direct text node of the pill; homepage source: a div
+    trial.replaceChildren(PRODUCT ? trialText : el('div', 'header-trial-label', trialText), icon('trial'));
     tools.append(trial);
   }
   return tools;
@@ -293,7 +329,8 @@ export default async function decorate(block) {
   const logo = el('a', 'header-logo');
   logo.href = '/';
   logo.setAttribute('aria-label', 'Ansys');
-  logo.append(icon('ansys-logo', 'logo'));
+  logo.append(icon(PRODUCT ? 'p-logo' : 'ansys-logo', 'logo'));
+  if (PRODUCT) logo.prepend(el('span', 'sr-only', 'Ansys part of Synopsys'));
 
   const burger = el('button', 'header-burger', icon('menu'));
   burger.type = 'button';

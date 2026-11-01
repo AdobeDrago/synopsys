@@ -1,3 +1,4 @@
+import { decorateProductButtons, groupEyebrows } from './product.js';
 import {
   loadHeader,
   loadFooter,
@@ -41,7 +42,9 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
  * load fonts.css and set a session storage flag
  */
 async function loadFonts() {
-  await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
+  // product pages (template: product) use variable Montserrat + Source Sans 3, like their source
+  const product = document.body.classList.contains('product');
+  await loadCSS(`${window.hlx.codeBasePath}/styles/${product ? 'fonts-product' : 'fonts'}.css`);
   try {
     if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
   } catch (e) {
@@ -114,7 +117,8 @@ function decorateButtons(main) {
     const text = a.textContent.trim();
 
     // quick structural checks
-    if (a.querySelector('img') || p.textContent.trim() !== text) return;
+    // an authored icon inside the link (e.g. :p-download:) still allows a button
+    if (a.querySelector('img:not(.icon img)') || p.textContent.trim() !== text) return;
 
     // skip URL display links
     try {
@@ -153,6 +157,11 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
+  if (document.body.classList.contains('product')) {
+    groupEyebrows(main);
+    // default-content buttons get the arrow; blocks decorate their own
+    main.querySelectorAll('.default-content-wrapper').forEach(decorateProductButtons);
+  }
 }
 
 /**
