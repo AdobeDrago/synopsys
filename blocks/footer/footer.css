@@ -1,20 +1,197 @@
+/* measured from the source footer at 1440px: 407.7px, black, 960px container */
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  box-sizing: border-box;
+  padding: 50px 0 0;
+  border-top: 1px solid rgb(21 22 23);
+  background-color: var(--color-black);
 }
 
-footer .footer > div {
-  margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+footer .footer-inner {
+  box-sizing: border-box;
+  width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
-footer .footer p {
+footer .footer-upper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -12px;
+}
+
+footer ul {
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-@media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
-  }
+footer a:any-link {
+  color: var(--color-gray-text);
+  font-family: var(--heading-font-family);
+  font-size: 12px;
+}
+
+/* full-width row overlapping the columns: outlined button (right) and social icons below it */
+footer .footer-top {
+  box-sizing: border-box;
+  width: 100%;
+  height: 90px;
+  margin: 0 0 -90px;
+  padding: 0 12px;
+}
+
+footer .footer-cta-row {
+  height: 0;
+}
+
+footer a.footer-cta:any-link {
+  display: block;
+  float: right;
+  margin: 0 0 30px;
+  padding: 16px;
+  border: 1px solid var(--color-gold);
+  border-radius: 0;
+  background: none;
+  color: var(--color-gold);
+  text-align: center;
+}
+
+footer a.footer-cta:any-link .button-text {
+  color: var(--color-gold);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 15px;
+  text-transform: uppercase;
+}
+
+footer .footer-social {
+  display: flex;
+  justify-content: flex-end;
+
+  /* the source row overhangs its 930px container by 2.5px on the right (measured: ends at x=1187.5) */
+  margin: 85px -2.5px 0 0;
+  padding: 0 5px 0 0;
+}
+
+footer .footer-social-list {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 15px; /* the source uses 15px right margins on all but the last icon */
+}
+
+footer a.footer-social-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  color: var(--color-link);
+  font-family: var(--body-font-family);
+  font-size: 28px;
+  line-height: 42px;
+  white-space: nowrap;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+footer a.footer-social-youtube {
+  width: 29px;
+}
+
+footer a.footer-social-twitter {
+  width: 25px;
+}
+
+/* link columns: 31% / 40% then 31% / 35% so they wrap into a 2 x 2 grid */
+footer .footer-col {
+  box-sizing: border-box;
+  flex: 0 0 31%;
+  padding: 0 12px;
+}
+
+footer .footer-col-2 {
+  flex-basis: 40%;
+}
+
+footer .footer-col-3,
+footer .footer-col-4 {
+  margin-top: 30px;
+}
+
+footer .footer-col-4 {
+  flex-basis: 35%;
+}
+
+/* line-height 0 on the items: each item is exactly as tall as its link's line, as in the source */
+footer .footer-col-list li {
+  margin: 0 0 8px;
+  line-height: 0;
+}
+
+footer .footer-col-list a:any-link {
+  font-weight: 400;
+  line-height: 13.2px;
+  text-transform: uppercase;
+}
+
+footer .footer-lower {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 0 24px;
+}
+
+footer .footer-copyright {
+  flex-shrink: 0;
+  margin: 0 15px 0 0;
+}
+
+footer .footer-copyright p,
+footer .footer-legal-list a:any-link {
+  margin: 0;
+  color: var(--color-gray-text);
+  font-family: var(--heading-font-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 19.2px;
+}
+
+/* 12/19.2 on the list itself: sets the row pitch and the width of the spaces between items */
+footer .footer-legal-list {
+  font-size: 12px;
+  line-height: 19.2px;
+}
+
+/* smaller 4x6 gold arrow on the outlined button */
+footer a.footer-cta:any-link::after {
+  width: 4px;
+  height: 6px;
+  border-width: 3px 0 3px 4px;
+  border-color: transparent transparent transparent var(--color-gold);
+}
+
+/* the source's visually hidden social labels are white 8/12 text */
+footer a.footer-social-icon .sr-only {
+  color: var(--color-white);
+  font-size: 8px;
+  line-height: 12px;
+}
+
+footer .footer-social-list li {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 8px;
+}
+
+footer .footer-col-list li.footer-col-head a:any-link {
+  font-size: 13.3333px;
+  font-weight: 800;
+  line-height: 30px;
+}
+
+footer .footer-legal-list li {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+footer .footer-legal-list li:last-child {
+  margin: 0 0 0 15px;
 }

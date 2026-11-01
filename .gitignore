@@ -11,3 +11,7 @@ helix-importer-ui
 # Ensure these files are tracked
 !CLAUDE.md
 !AGENTS.md
+
+# local migration workspace (scrape output, review report, ledger) and skill script deps
+import-work/
+.claude/skills/*/scripts/node_modules/

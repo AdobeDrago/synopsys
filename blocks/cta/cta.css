@@ -1,0 +1,42 @@
+/* measured from the source "Let's Get Started" section at 1440px: 551px, 80px padding, slash background */
+main > .section.cta-container {
+  padding: 80px 0;
+  background-image: var(--cta-background, none);
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.cta {
+  box-sizing: border-box;
+  width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+.cta-content {
+  width: 447px;
+}
+
+.cta-content h2 {
+  margin: 0 0 24px;
+  color: var(--color-black);
+  font-size: 60px;
+  font-weight: 300;
+  line-height: 60px;
+}
+
+.cta-content h2 strong {
+  font-weight: 600;
+}
+
+.cta-content p {
+  margin: 0 0 48px;
+  color: var(--color-black);
+  font-size: 20px;
+  line-height: normal;
+}
+
+.cta-content p.button-wrapper {
+  margin: 0;
+}
