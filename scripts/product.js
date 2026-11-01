@@ -103,6 +103,7 @@ export function vidyardBackground(cell) {
 }
 
 const CLOSE = 'M256-213.85 213.85-256l224-224-224-224L256-746.15l224 224 224-224L746.15-704l-224 224 224 224L704-213.85l-224-224-224 224Z';
+const SLASH = 'M14.5054 0L0 34.0064H9.90527L23.8723 0H14.5054Z';
 const PLAY = 'M16 0C7.168 0 0 7.168 0 16C0 24.832 7.168 32 16 32C24.832 32 32 24.832 32 16C32 7.168 24.832 0 16 0ZM12.8 23.2V8.8L22.4 16L12.8 23.2Z';
 
 function glyph(viewBox, d, cls) {
@@ -118,6 +119,26 @@ function glyph(viewBox, d, cls) {
 
 /** The 32-unit filled play circle used on video thumbnails. */
 export const playIcon = () => glyph('0 0 32 32', PLAY, 'product-play');
+
+/** The gold slash glyph (24 × 34 units) the source uses for links and timeline markers. */
+export const slashIcon = () => glyph('0 0 24 34', SLASH, 'product-slash');
+
+/**
+ * The source's "slash" text link (gold slash, label, arrow), e.g. "View All Fluent Case Studies".
+ * @param {HTMLAnchorElement} a authored link; its label and href are kept
+ * @returns {HTMLAnchorElement}
+ */
+export function slashLink(a) {
+  const link = document.createElement('a');
+  link.href = a.href;
+  link.className = 'product-slash-link';
+  const label = document.createElement('span');
+  const text = document.createElement('span');
+  text.textContent = a.textContent.trim();
+  label.append(text, arrowIcon());
+  link.append(slashIcon(), label);
+  return link;
+}
 
 /**
  * Click-to-load player: opens a modal dialog and only then loads the Vidyard iframe;

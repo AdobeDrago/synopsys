@@ -512,27 +512,42 @@ body.product main > .section.dark a.button.secondary:any-link:hover {
   color: rgb(0 0 0);
 }
 
-/* sections whose intro leads into self-padded blocks (media rows, CTA bands): the intro
+/* sections whose intro leads into self-padded blocks (media rows, resource grids, players): the intro
    carries the source's header spacing (48px 64px 24px, 896px measure, 16px gap) */
-body.product main > .section:has(> .columns-wrapper .columns.media) {
+body.product main > .section:has(> .columns-wrapper .columns.media),
+body.product main > .section:has(> .cards-wrapper .cards.resources),
+body.product main > .section:has(> .hero-carousel-wrapper .hero-carousel.player),
+body.product main > .section:has(> .columns-wrapper .columns.timeline) {
   padding: 0;
 }
 
-body.product main > .section:has(> .columns-wrapper .columns.media) > div {
+body.product main > .section:has(> .columns-wrapper .columns.media) > div,
+body.product main > .section:has(> .cards-wrapper .cards.resources) > div,
+body.product main > .section:has(> .hero-carousel-wrapper .hero-carousel.player) > div,
+body.product main > .section:has(> .columns-wrapper .columns.timeline) > div {
   max-width: none;
 }
 
-body.product main > .section:has(> .columns-wrapper .columns.media) > div + div {
+body.product main > .section:has(> .columns-wrapper .columns.media) > div + div,
+body.product main > .section:has(> .cards-wrapper .cards.resources) > div + div,
+body.product main > .section:has(> .hero-carousel-wrapper .hero-carousel.player) > div + div,
+body.product main > .section:has(> .columns-wrapper .columns.timeline) > div + div {
   margin-top: 0;
 }
 
-body.product main > .section:has(> .columns-wrapper .columns.media) > .default-content-wrapper {
+body.product main > .section:has(> .columns-wrapper .columns.media) > .default-content-wrapper,
+body.product main > .section:has(> .cards-wrapper .cards.resources) > .default-content-wrapper,
+body.product main > .section:has(> .hero-carousel-wrapper .hero-carousel.player) > .default-content-wrapper,
+body.product main > .section:has(> .columns-wrapper .columns.timeline) > .default-content-wrapper {
   gap: 16px;
   max-width: 1660px;
   padding: 48px 64px 24px;
 }
 
-body.product main > .section:has(> .columns-wrapper .columns.media) > .default-content-wrapper > * {
+body.product main > .section:has(> .columns-wrapper .columns.media) > .default-content-wrapper > *,
+body.product main > .section:has(> .cards-wrapper .cards.resources) > .default-content-wrapper > *,
+body.product main > .section:has(> .hero-carousel-wrapper .hero-carousel.player) > .default-content-wrapper > *,
+body.product main > .section:has(> .columns-wrapper .columns.timeline) > .default-content-wrapper > * {
   max-width: 896px;
 }
 
@@ -545,4 +560,41 @@ body.product main > .section.group-start {
 
 body.product main > .section.group-end {
   border-bottom: 48px solid transparent;
+}
+
+/* "slash" text link (scripts/product.js slashLink): gold slash, label, arrow */
+body.product .product-slash-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  color: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+body.product .product-slash-link > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 0;
+  line-height: 18px;
+}
+
+body.product .product-slash {
+  display: block;
+  width: 24px;
+  height: 32px;
+  fill: var(--product-gold);
+}
+
+@media (width <= 1280px) {
+  body.product .product-slash-link {
+    font-size: 16px;
+  }
+
+  body.product .product-slash-link > span {
+    line-height: 16px;
+  }
 }

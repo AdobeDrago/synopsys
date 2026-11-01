@@ -1,7 +1,33 @@
 import linkToImage from '../../scripts/scene7.js';
 import {
-  decorateProductButtons, inlineIcon, vidyardBackground,
+  decorateProductButtons, inlineIcon, slashIcon, vidyardBackground,
 } from '../../scripts/product.js';
+
+/**
+ * Timeline variant (product pages): one row per release, title + date | release notes,
+ * each entry opened by a gold slash marker on a 2px rule.
+ */
+function decorateTimeline(block) {
+  const inner = document.createElement('div');
+  inner.className = 'columns-timeline-inner';
+  [...block.children].forEach((row) => {
+    const [meta, notes] = row.children;
+    if (!meta) return;
+    const marker = document.createElement('div');
+    marker.className = 'columns-timeline-marker';
+    marker.append(slashIcon());
+    const entry = document.createElement('div');
+    entry.className = 'columns-timeline-entry';
+    meta.className = 'columns-timeline-meta';
+    entry.append(meta);
+    if (notes) {
+      notes.className = 'columns-timeline-notes';
+      entry.append(notes);
+    }
+    inner.append(marker, entry);
+  });
+  block.replaceChildren(inner);
+}
 
 /**
  * Media variant (product pages): copy | media (either order). Media is a Vidyard link
@@ -99,6 +125,10 @@ function decorateMedia(block) {
 }
 
 export default function decorate(block) {
+  if (block.classList.contains('timeline')) {
+    decorateTimeline(block);
+    return;
+  }
   if (block.classList.contains('media')) {
     decorateMedia(block);
     return;

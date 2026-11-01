@@ -1,5 +1,7 @@
 import linkToImage, { wrapButtonLabels } from '../../scripts/scene7.js';
-import { decorateProductButtons, vidyardBackground } from '../../scripts/product.js';
+import {
+  decorateProductButtons, playIcon, slashLink, vidyardBackground, vidyardId,
+} from '../../scripts/product.js';
 
 // timings measured on the source carousel: 10s autoplay, 500ms linear crossfade
 const AUTOPLAY_MS = 10000;
@@ -82,7 +84,116 @@ function decorateProduct(block) {
   block.replaceChildren(...parts);
 }
 
+/**
+ * Player variant (product pages): video tabs beside a click-to-load Vidyard player.
+ * Rows: h5 eyebrow + h4 heading, one Vidyard link per video (its text is the tab label),
+ * and an optional trailing link (rendered as the source's slash link).
+ */
+function decoratePlayer(block) {
+  const list = document.createElement('div');
+  list.className = 'hero-carousel-player-list';
+  const header = document.createElement('div');
+  header.className = 'hero-carousel-player-header';
+  const tabs = document.createElement('div');
+  tabs.className = 'hero-carousel-player-tabs';
+  tabs.setAttribute('role', 'tablist');
+  const panels = document.createElement('div');
+  panels.className = 'hero-carousel-player-panels';
+  let footer = null;
+  [...block.children].forEach((row) => {
+    const cell = row.firstElementChild;
+    if (!cell) return;
+    const a = cell.querySelector('a');
+    const id = a && vidyardId(a.href);
+    if (!a) {
+      header.append(...cell.children);
+      return;
+    }
+    if (!id) {
+      footer = slashLink(a);
+      return;
+    }
+    const n = tabs.children.length;
+    const title = a.textContent.trim();
+    const tab = document.createElement('button');
+    tab.type = 'button';
+    tab.setAttribute('role', 'tab');
+    tab.id = `${block.id || 'player'}-tab-${n}`;
+    const label = document.createElement('div');
+    const text = document.createElement('div');
+    text.textContent = title;
+    label.append(text);
+    tab.append(playIcon(), label);
+    tabs.append(tab);
+
+    const panel = document.createElement('div');
+    panel.className = 'hero-carousel-player-panel';
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', tab.id);
+    const frame = document.createElement('button');
+    frame.type = 'button';
+    frame.className = 'hero-carousel-player-frame';
+    frame.setAttribute('aria-label', `Play video ${title}`);
+    const poster = document.createElement('img');
+    poster.src = `https://play.vidyard.com/${id}.jpg`;
+    poster.alt = `Video thumbnail for ${title}`;
+    poster.loading = n ? 'lazy' : 'eager';
+    // the play glyph comes first so a positioned poster (as Vidyard's own player does) covers it
+    frame.append(playIcon(), poster);
+    // click-to-load: the Vidyard iframe replaces the poster only when asked for
+    frame.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://play.vidyard.com/${id}?disable_popouts=1&autoplay=1&type=inline`;
+      iframe.title = title;
+      iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+      iframe.allowFullscreen = true;
+      const live = document.createElement('div');
+      live.className = 'hero-carousel-player-frame';
+      live.append(iframe);
+      frame.replaceWith(live);
+    }, { once: true });
+    panel.append(frame);
+    panels.append(panel);
+  });
+
+  const show = (n) => {
+    [...tabs.children].forEach((t, i) => {
+      t.setAttribute('aria-selected', i === n ? 'true' : 'false');
+      t.tabIndex = i === n ? 0 : -1;
+    });
+    [...panels.children].forEach((p, i) => {
+      p.classList.toggle('active', i === n);
+      p.inert = i !== n;
+    });
+  };
+  [...tabs.children].forEach((t, i) => t.addEventListener('click', () => show(i)));
+  tabs.addEventListener('keydown', (e) => {
+    const STEP = {
+      ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1,
+    };
+    const k = STEP[e.key];
+    if (!k) return;
+    const all = [...tabs.children];
+    const next = (all.indexOf(document.activeElement) + k + all.length) % all.length;
+    all[next].focus();
+    show(next);
+    e.preventDefault();
+  });
+
+  const intro = document.createElement('div');
+  intro.className = 'hero-carousel-player-intro';
+  intro.append(header, tabs);
+  list.append(intro);
+  if (footer) list.append(footer);
+  block.replaceChildren(list, panels);
+  show(0);
+}
+
 export default function decorate(block) {
+  if (block.classList.contains('player')) {
+    decoratePlayer(block);
+    return;
+  }
   if (block.classList.contains('product')) {
     decorateProduct(block);
     return;

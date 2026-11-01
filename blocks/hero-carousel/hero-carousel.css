@@ -281,3 +281,189 @@ main > .section.hero-carousel-container:has(.product) {
     font-size: 20px;
   }
 }
+
+/* player variant (product pages): 512px video tabs | 16:9 click-to-load player,
+   measured from the source Resources tutorials at 1440/1280 */
+.hero-carousel.player {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 512px minmax(0, 1fr);
+  gap: 96px;
+  height: auto;
+  max-width: 1788px;
+  overflow: visible;
+  margin: 0 auto;
+  padding: 48px 64px;
+  background: none;
+  color: var(--product-ink);
+}
+
+.hero-carousel.player .hero-carousel-player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.hero-carousel.player .hero-carousel-player-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.hero-carousel.player .hero-carousel-player-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-carousel.player .hero-carousel-player-header :is(h4, h5) {
+  margin: 0;
+  color: inherit;
+  font-family: var(--product-heading-stack);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 27.5px;
+  text-wrap: balance;
+}
+
+.hero-carousel.player .hero-carousel-player-header h4 {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 37.5px;
+}
+
+.hero-carousel.player .hero-carousel-player-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero-carousel.player [role="tab"] {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  margin: 0;
+  padding: 24px 64px 24px 16px;
+  border: 2px solid var(--product-line);
+  border-radius: 8px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-carousel.player [role="tab"][aria-selected="true"],
+.hero-carousel.player [role="tab"]:hover {
+  border-color: rgb(50 54 50);
+}
+
+.hero-carousel.player [role="tab"] .product-play {
+  display: block;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  fill: var(--product-ink);
+}
+
+.hero-carousel.player [role="tab"] > div {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hero-carousel.player [role="tab"] > div > div {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+.hero-carousel.player .hero-carousel-player-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-self: start;
+  padding-top: 48px;
+}
+
+.hero-carousel.player .hero-carousel-player-panel {
+  grid-area: 1 / 1;
+  display: flex;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.hero-carousel.player .hero-carousel-player-panel.active {
+  opacity: 1;
+  transform: none;
+}
+
+.hero-carousel.player .hero-carousel-player-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 24px;
+  background-color: rgb(0 0 0);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
+  cursor: pointer;
+}
+
+.hero-carousel.player .hero-carousel-player-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-carousel.player .hero-carousel-player-frame .product-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  transform: translate(-50%, -50%);
+  fill: rgb(255 255 255);
+}
+
+.hero-carousel.player .hero-carousel-player-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (width <= 1280px) {
+  .hero-carousel.player .hero-carousel-player-header h5 {
+    font-size: 18px;
+    line-height: 24.75px;
+  }
+
+  .hero-carousel.player .hero-carousel-player-header h4 {
+    font-size: 26px;
+    line-height: 32.5px;
+  }
+
+  .hero-carousel.player [role="tab"] > div > div {
+    font-size: 16px;
+    line-height: 1.5556;
+  }
+}
+
+@media (width < 1024px) {
+  .hero-carousel.player {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    padding: 32px 24px;
+  }
+}
