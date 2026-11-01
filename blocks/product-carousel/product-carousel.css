@@ -225,3 +225,360 @@ main > .section.product-carousel-container {
   border-bottom-width: 1px;
   border-color: rgb(167 167 167);
 }
+
+/* stylelint-disable no-descending-specificity -- product variants are scoped by variant class, not cascade order */
+
+/* logos variant (product pages): two endlessly scrolling rows under 20% white edge fades,
+   measured at 1440 and 1280px */
+body.product main > .section.product-carousel-container:has(.logos) {
+  padding: 128px 64px;
+  background-color: rgb(255 255 255);
+}
+
+body.product main > .section.product-carousel-container:has(.logos) > div + div {
+  margin-top: 20px;
+}
+
+body.product main > .section.product-carousel-container:has(.logos) > .default-content-wrapper {
+  padding: 0 24px 36px;
+}
+
+body.product main > .section.product-carousel-container:has(.logos) > .default-content-wrapper > * {
+  max-width: none;
+}
+
+body.product main > .section.product-carousel-container:has(.logos) > .default-content-wrapper h2 {
+  width: auto;
+  margin: 0;
+  color: var(--product-ink);
+  text-align: center;
+}
+
+body.product main > .section.product-carousel-container:has(.logos) > .default-content-wrapper h2::before,
+body.product main > .section.product-carousel-container:has(.logos) > .default-content-wrapper h2::after {
+  content: none;
+}
+
+.product-carousel.logos {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-carousel.logos .product-carousel-fade {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  width: 20%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.product-carousel.logos .product-carousel-fade-start {
+  left: 0;
+  background-image: linear-gradient(to right in oklab, rgb(255 255 255) 0%, rgb(255 255 255) 50%, transparent 100%);
+}
+
+.product-carousel.logos .product-carousel-fade-end {
+  right: 0;
+  background-image: linear-gradient(to left in oklab, rgb(255 255 255) 0%, rgb(255 255 255) 50%, transparent 100%);
+}
+
+.product-carousel.logos .product-carousel-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow: hidden;
+}
+
+.product-carousel.logos .product-carousel-marquee {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: max-content;
+  padding: 0 0 0 32px;
+  animation: product-logos-scroll 40s linear infinite;
+}
+
+.product-carousel.logos .product-carousel-logo {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 288px;
+  height: 96px;
+}
+
+.product-carousel.logos .product-carousel-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@keyframes product-logos-scroll {
+  0% { transform: translate(0); }
+  100% { transform: translate(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-carousel.logos .product-carousel-marquee {
+    animation-play-state: paused;
+  }
+}
+
+/* gallery variant (product pages): 400 x 640 cards scrolling sideways, measured at 1440/1280 */
+body.product main > .section.product-carousel-container:has(.gallery) {
+  padding: 0;
+  background-color: rgb(255 255 255);
+}
+
+body.product main > .section.product-carousel-container:has(.gallery) > .default-content-wrapper {
+  gap: 16px;
+  max-width: 1660px;
+  padding: 48px 64px 24px;
+}
+
+body.product main > .section.product-carousel-container:has(.gallery) > .default-content-wrapper > * {
+  max-width: 896px;
+}
+
+body.product main > .section.product-carousel-container:has(.gallery) > .default-content-wrapper h2 {
+  width: auto;
+  margin: 0;
+  color: var(--product-ink);
+  text-align: start;
+}
+
+body.product main > .section.product-carousel-container:has(.gallery) > .default-content-wrapper h2::before,
+body.product main > .section.product-carousel-container:has(.gallery) > .default-content-wrapper h2::after {
+  content: none;
+}
+
+body.product main > .section.product-carousel-container:has(.gallery) > div + div {
+  margin-top: 0;
+}
+
+.product-carousel.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  color: rgb(252 252 252);
+}
+
+.product-carousel.gallery .product-carousel-gallery-viewport {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.product-carousel.gallery .product-carousel-gallery-track {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  padding: 8px 0 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.product-carousel.gallery .product-carousel-gallery-fade {
+  position: absolute;
+  top: 0;
+  width: 36px;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.product-carousel.gallery .product-carousel-gallery-fade.visible {
+  opacity: 1;
+}
+
+.product-carousel.gallery .product-carousel-gallery-fade-start {
+  left: 0;
+  background-image: linear-gradient(to left, transparent 0%, rgb(252 252 252) 100%);
+}
+
+.product-carousel.gallery .product-carousel-gallery-fade-end {
+  right: 0;
+  background-image: linear-gradient(to right, transparent 0%, rgb(252 252 252) 100%);
+}
+
+.product-carousel.gallery a.product-carousel-card:any-link,
+.product-carousel.gallery .product-carousel-card {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-carousel.gallery article {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  width: 400px;
+  max-width: 400px;
+  height: 640px;
+  overflow: hidden;
+  border-radius: 24px;
+  background-color: var(--product-ink);
+}
+
+.product-carousel.gallery .product-carousel-card-media {
+  position: absolute;
+  inset: 0;
+}
+
+.product-carousel.gallery .product-carousel-card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-carousel.gallery .product-carousel-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgb(0 0 0 / 40%) 0%, rgb(0 0 0 / 60%) 100%);
+}
+
+.product-carousel.gallery .product-carousel-card-body {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 80px 32px 64px;
+}
+
+.product-carousel.gallery .product-carousel-card-header {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.product-carousel.gallery h3 {
+  margin: 0;
+  text-wrap: wrap;
+  color: rgb(252 252 252);
+  font-family: var(--product-heading-stack);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 37.5px;
+}
+
+/* text collapsed to 0 at rest, expanded (8px + text) on hover */
+.product-carousel.gallery .product-carousel-card-text {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-carousel.gallery .product-carousel-card-text > div {
+  overflow: hidden;
+}
+
+.product-carousel.gallery .product-carousel-card-text p {
+  display: flow-root;
+  margin: 8px 0 0;
+  color: rgb(252 252 252);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: calc(28 / 18);
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-carousel.gallery .product-carousel-card:hover .product-carousel-card-text,
+.product-carousel.gallery .product-carousel-card:focus-visible .product-carousel-card-text {
+  grid-template-rows: 1fr;
+}
+
+.product-carousel.gallery .product-carousel-card:hover .product-carousel-card-text p,
+.product-carousel.gallery .product-carousel-card:focus-visible .product-carousel-card-text p {
+  opacity: 1;
+}
+
+.product-carousel.gallery .product-carousel-card-pill {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32px;
+  background-color: rgb(252 252 252);
+}
+
+.product-carousel.gallery .product-carousel-card-label {
+  max-width: 0;
+  overflow: hidden;
+  padding: 0 0 0 16px;
+  color: var(--product-ink);
+  font-weight: 700;
+  opacity: 0;
+  white-space: nowrap;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-carousel.gallery .product-carousel-card:hover .product-carousel-card-label {
+  max-width: 160px;
+  opacity: 1;
+}
+
+.product-carousel.gallery .product-carousel-card-icon {
+  display: block;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  margin: 0 4px;
+  fill: var(--product-ink);
+}
+
+.product-carousel.gallery .product-carousel-gallery-controls {
+  display: flex;
+  align-self: center;
+  gap: 16px;
+  padding: 4px;
+  border-radius: 999rem;
+  background-color: rgb(23 25 23 / 20%);
+}
+
+.product-carousel.gallery .product-carousel-gallery-controls[hidden] {
+  display: none;
+}
+
+.product-carousel.gallery .product-carousel-gallery-controls button {
+  display: block;
+  width: 56px;
+  height: 56px;
+  padding: 8px;
+  border: 0;
+  border-radius: 999rem;
+  background-color: transparent;
+  color: var(--product-ink);
+  cursor: pointer;
+}
+
+.product-carousel.gallery .product-carousel-gallery-icon {
+  display: block;
+  width: 40px;
+  height: 40px;
+  fill: rgb(252 252 252);
+}
+
+@media (width <= 1280px) {
+  .product-carousel.gallery h3 {
+    font-size: 26px;
+    line-height: 32.5px;
+  }
+
+  .product-carousel.gallery .product-carousel-card-text p {
+    font-size: 16px;
+  }
+}
+

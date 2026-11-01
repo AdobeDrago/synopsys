@@ -15,3 +15,6 @@ helix-importer-ui
 # local migration workspace (scrape output, review report, ledger) and skill script deps
 import-work/
 .claude/skills/*/scripts/node_modules/
+
+# local preview copies of DA pages (import-work/fluent/build.py)
+products/

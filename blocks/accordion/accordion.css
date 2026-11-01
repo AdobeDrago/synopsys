@@ -1,0 +1,124 @@
+/* accordion (product FAQ), measured from the Fluent FAQ at 1440 and 1280px */
+.accordion {
+  box-sizing: border-box;
+}
+
+.accordion * {
+  box-sizing: border-box;
+}
+
+.accordion .accordion-item {
+  padding: 44px 0;
+  border-bottom: 2px solid var(--product-line, rgb(193 194 193));
+}
+
+.accordion .accordion-question {
+  position: relative;
+  margin: 0;
+  color: var(--product-ink, rgb(23 25 23));
+  font-family: var(--product-heading-stack, inherit);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 37.5px;
+  text-align: left;
+}
+
+.accordion .accordion-trigger {
+  display: block;
+  width: calc(100% - 32px);
+  margin: 0;
+  padding: 0 48px 0 0;
+  border-width: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.accordion .accordion-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--product-ink, rgb(23 25 23));
+}
+
+.accordion .accordion-icon-svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  fill: rgb(252 252 252);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion .accordion-trigger[aria-expanded="true"] .accordion-icon-svg {
+  transform: rotate(45deg);
+}
+
+.accordion .accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion .accordion-trigger[aria-expanded="true"] + .accordion-panel,
+.accordion .accordion-question:has([aria-expanded="true"]) + .accordion-panel {
+  opacity: 1;
+}
+
+.accordion .accordion-body {
+  padding: 24px 48px 32px 0;
+}
+
+.accordion .accordion-body p {
+  margin: 0 0 24px;
+  font-size: 18px;
+  line-height: 1.625;
+}
+
+/* FAQ section: intro left (39.85% of the row), accordion right */
+body.product main > .section.accordion-container {
+  display: flex;
+  gap: 80px;
+}
+
+body.product main > .section.accordion-container > div + div {
+  margin-top: 0;
+}
+
+body.product main > .section.accordion-container > .default-content-wrapper {
+  flex: 0 0 calc((100% - 80px) * 491.2 / 1232);
+  gap: 16px;
+  max-width: 768px;
+}
+
+body.product main > .section.accordion-container > .accordion-wrapper {
+  position: relative;
+  flex: 1 1 0%;
+  padding: 0 64px 0 0;
+}
+
+@media (width <= 1280px) {
+  .accordion .accordion-question {
+    font-size: 26px;
+    line-height: 32.5px;
+  }
+}
+
+@media (width < 1024px) {
+  body.product main > .section.accordion-container {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  body.product main > .section.accordion-container > .accordion-wrapper {
+    padding: 0;
+  }
+}
