@@ -607,29 +607,29 @@ a.header-bar-link:any-link {
 
 /* compact header at 1280px and below: no utility bar, logo + menu button only */
 @media (width <= 1280px) {
-  header .header-utility,
-  .header-nav,
-  .header-tools {
+  body:not(.product) header .header-utility,
+  body:not(.product) .header-nav,
+  body:not(.product) .header-tools {
     display: none;
   }
 
-  header .header {
+  body:not(.product) header .header {
     padding-top: 0;
   }
 
-  .header-logo {
+  body:not(.product) .header-logo {
     width: 90px;
     height: 40px;
     margin-left: 5px;
     padding: 0 40px 0 0;
   }
 
-  .header-logo .header-icon-logo {
+  body:not(.product) .header-logo .header-icon-logo {
     width: 90px;
     height: 40px;
   }
 
-  .header-burger {
+  body:not(.product) .header-burger {
     display: block;
     box-sizing: border-box;
     width: 40px;
@@ -642,7 +642,7 @@ a.header-bar-link:any-link {
     cursor: pointer;
   }
 
-  .header-burger .header-icon-menu {
+  body:not(.product) .header-burger .header-icon-menu {
     width: 24px;
     height: 24px;
     margin: 0 auto;
@@ -720,4 +720,267 @@ a.header-banner-button:any-link {
 .header-category:not(:has(> .header-category-title)) > .header-category-list {
   margin-top: 45px;
   padding-top: 0;
+}
+
+/* stylelint-disable no-descending-specificity -- product template rules are scoped by body.product, not cascade order */
+
+/* ---------- product template (Fluent pages): 57px utility bar + 101.6px header bar ---------- */
+body.product {
+  /* the bar is 20px padding around the 120px-wide logo at its 555:285 aspect (61.609px) */
+  --product-logo-height: calc(120px * 285 / 555);
+  --nav-height: calc(57px + 40px + var(--product-logo-height));
+}
+
+body.product header .header {
+  padding-top: 57px;
+}
+
+body.product header .header-utility {
+  height: 57px;
+  padding: 8px 24px;
+}
+
+body.product .header-utility-logos a:any-link {
+  display: block;
+  border-radius: 4px;
+  font-family: var(--product-font-stack);
+  line-height: 28px;
+}
+
+body.product .header-utility-logos a.header-utility-logo-ansys {
+  padding: 0;
+}
+
+/* breadcrumb: hidden at the top, revealed once the utility bar is sticky */
+body.product .header-breadcrumb {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  max-width: 0;
+  overflow: hidden;
+  visibility: hidden;
+  white-space: nowrap;
+  transition: max-width 0.5s ease, visibility 0.5s ease;
+}
+
+body.product .header-utility-scrolled .header-breadcrumb {
+  max-width: 100%;
+  visibility: visible;
+}
+
+body.product .header-breadcrumb,
+body.product .header-breadcrumb a:any-link {
+  color: var(--color-white);
+  font-family: var(--product-font-stack);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+body.product .header-locale {
+  box-sizing: border-box;
+  height: 40px;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 0;
+  text-align: left;
+  border: 2px solid transparent;
+  border-radius: 15984px;
+}
+
+body.product .header-locale .header-icon-globe {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+body.product .header-locale-label {
+  padding: 2px 0 0;
+  color: rgb(252 252 252);
+  font-family: var(--product-font-stack);
+  line-height: 14px;
+}
+
+body.product .header-utility-tools {
+  gap: 12px;
+}
+
+body.product .header-utility-ask {
+  width: 69.41px; /* footprint of the source's third-party Ask button */
+}
+
+body.product header .header-bar {
+  height: calc(40px + var(--product-logo-height));
+  padding: 0 31px 0 64px;
+}
+
+body.product .header-logo,
+body.product .header-logo .header-icon-logo {
+  width: 120px;
+  height: var(--product-logo-height);
+}
+
+body.product .header-nav {
+  align-self: center;
+  gap: 2px;
+  margin: 0 0 0 48px;
+}
+
+body.product .header-nav-button {
+  box-sizing: border-box;
+  height: 60px;
+  padding: 14px 20px;
+  border: 2px solid transparent;
+  border-radius: 15984px;
+  font-family: var(--product-font-stack);
+  font-size: 16px;
+  line-height: 16px;
+}
+
+body.product .header-nav-label {
+  color: rgb(252 252 252);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+}
+
+body.product .header-nav-button .header-icon-chevron {
+  width: 24px;
+  height: 24px;
+  margin: 0 0 0 8px;
+}
+
+body.product .header-search .header-icon-search {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+/* the 36px search button: 24px icon, 4px padding, 2px transparent border */
+body.product a.header-search:any-link {
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  padding: 4px;
+  border: 2px solid transparent;
+  border-radius: 15984px;
+}
+
+/* icons are currentColor: triggers and Customers use the source's off-white */
+body.product .header-nav-button,
+body.product .header-customers {
+  color: rgb(252 252 252);
+}
+
+body.product .header-customers-wrap {
+  margin-left: 16px;
+}
+
+body.product .header-customers {
+  box-sizing: border-box;
+  gap: 8px;
+  height: 60px;
+  padding: 14px 20px;
+  border: 2px solid transparent;
+  border-radius: 15984px;
+}
+
+body.product .header-customers .header-icon-user,
+body.product .header-customers .header-icon-caret {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+}
+
+body.product .header-customers-label {
+  margin: 0;
+  color: rgb(252 252 252);
+  font-family: var(--product-font-stack);
+  font-size: 18px;
+  line-height: 28px;
+  text-align: left;
+}
+
+body.product a.header-trial:any-link {
+  box-sizing: border-box;
+  gap: 12px;
+  height: 52px;
+  margin: 0 0 0 16px;
+  padding: 14px 20px;
+  border: 2px solid rgb(253 183 26);
+  border-radius: 15984px;
+  color: var(--color-black);
+  font-family: var(--product-font-stack);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+body.product .header-trial .header-icon-trial {
+  margin: 0;
+}
+
+/* product: text-lg labels keep a unitless line-height (28/18), and drop to 16px at 1280px and below */
+body.product .header-utility-logos a:any-link,
+body.product .header-breadcrumb,
+body.product .header-nav-label,
+body.product .header-customers-label {
+  line-height: calc(1.75 / 1.125);
+}
+
+@media (width <= 1280px) {
+  body.product .header-utility-logos a:any-link,
+  body.product .header-breadcrumb,
+  body.product .header-nav-label,
+  body.product .header-customers-label {
+    font-size: 16px;
+  }
+}
+
+/* product: hidden labels sit inside positioned parents and inherit their type, as in the source */
+body.product .header-locale,
+body.product a.header-logo,
+body.product a.header-search {
+  position: relative;
+  color: rgb(252 252 252);
+  font-family: var(--product-font-stack);
+  font-weight: 600;
+}
+
+body.product a.header-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+}
+
+body.product .header-locale-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 24px 0 16px;
+}
+
+body.product a.header-logo {
+  font-weight: 400;
+}
+
+@media (width <= 1280px) {
+  body.product .header-utility-ask {
+    width: 66.36px;
+  }
+
+  body.product .header-locale-label {
+    font-size: 12px;
+    line-height: 12px;
+  }
+
+  body.product a.header-search {
+    font-size: 16px;
+    line-height: 16px;
+  }
 }

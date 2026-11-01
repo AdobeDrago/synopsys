@@ -69,3 +69,213 @@
   content: url("../../icons/arrow-right.svg");
   margin: 0 0 0 3px;
 }
+
+/* subnav variant (product pages): measured from the Fluent sub-nav at 1440 and 1280px.
+   In-flow bar overlaps the hero by 48px; a fixed compact copy shows once scrolled past it. */
+main > .section.promo-strip-container:has(.subnav) {
+  position: relative;
+  height: 0;
+}
+
+.promo-strip.subnav {
+  display: block;
+  height: 0;
+  padding: 0;
+  background-image: none;
+}
+
+.promo-strip.subnav * {
+  box-sizing: border-box;
+}
+
+.promo-strip.subnav .promo-strip-bar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 10;
+  margin: -48px 0 0;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promo-strip.subnav .promo-strip-inner {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.promo-strip.subnav nav {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 24px;
+  border: 2px solid var(--product-line);
+  border-radius: calc(infinity * 1px);
+  background-color: rgb(255 255 255);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promo-strip.subnav .promo-strip-row {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.promo-strip.subnav .promo-strip-title {
+  margin: 0;
+  padding: 0 16px;
+  color: var(--product-ink);
+  font-family: var(--product-heading-stack);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 37.5px;
+  white-space: nowrap;
+}
+
+.promo-strip.subnav .promo-strip-links {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+}
+
+.promo-strip.subnav .promo-strip-links a:any-link,
+.promo-strip.subnav .promo-strip-cta a:any-link {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: fit-content;
+  padding: 16px 28px;
+  border: 2px solid transparent;
+  border-radius: 999rem;
+  color: var(--product-ink);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 18px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promo-strip.subnav .promo-strip-links a:any-link:hover {
+  border-color: rgb(235 235 235);
+  background-color: rgb(235 235 235);
+}
+
+.promo-strip.subnav .promo-strip-links a[aria-current="page"] {
+  border-color: rgb(39 42 39);
+}
+
+.promo-strip.subnav .promo-strip-cta {
+  display: block;
+  white-space: nowrap;
+}
+
+/* stylelint-disable-next-line no-descending-specificity -- CTA restyles the shared pill */
+.promo-strip.subnav .promo-strip-cta a:any-link {
+  display: inline-flex;
+  border-color: var(--product-ink);
+}
+
+.promo-strip.subnav .promo-strip-cta a:any-link:hover {
+  border-color: rgb(0 0 0);
+  background-color: rgb(0 0 0);
+  color: rgb(252 252 252);
+}
+
+.promo-strip.subnav .promo-strip-cta svg {
+  display: block;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  fill: currentcolor;
+}
+
+/* fixed compact copy, under the 57px utility bar */
+.promo-strip.subnav .promo-strip-sticky {
+  position: fixed;
+  top: 57px;
+  left: 0;
+  z-index: 14;
+  display: none;
+  width: 100%;
+}
+
+.promo-strip.subnav.is-sticky .promo-strip-sticky {
+  display: block;
+}
+
+.promo-strip.subnav .promo-strip-sticky .promo-strip-bar {
+  top: 0;
+  margin: 0;
+}
+
+.promo-strip.subnav .promo-strip-sticky .promo-strip-inner {
+  max-width: none;
+  border-bottom: 2px solid var(--product-line);
+  background-color: rgb(255 255 255);
+}
+
+.promo-strip.subnav .promo-strip-sticky nav {
+  padding: 16px 24px;
+  border: 0;
+  border-radius: 0;
+}
+
+.promo-strip.subnav .promo-strip-sticky .promo-strip-links a:any-link {
+  padding: 14px 20px;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.promo-strip.subnav .promo-strip-sticky .promo-strip-cta a:any-link {
+  padding: 14px 20px;
+  border-color: var(--product-gold);
+  background-color: var(--product-gold);
+  color: rgb(0 0 0);
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.promo-strip.subnav .promo-strip-sticky .promo-strip-cta a:any-link:hover {
+  border-color: var(--product-gold-hover);
+  background-color: var(--product-gold-hover);
+  color: rgb(0 0 0);
+}
+
+@media (width <= 1280px) {
+  .promo-strip.subnav .promo-strip-title {
+    font-size: 26px;
+    line-height: 32.5px;
+  }
+
+  .promo-strip.subnav .promo-strip-links a:any-link,
+  .promo-strip.subnav .promo-strip-cta a:any-link {
+    font-size: 16px;
+    line-height: 16px;
+  }
+}
+
+/* below the scored desktop widths: links scroll sideways instead of wrapping */
+@media (width < 1024px) {
+  .promo-strip.subnav .promo-strip-title {
+    padding: 0;
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .promo-strip.subnav .promo-strip-links {
+    overflow-x: auto;
+  }
+
+  .promo-strip.subnav .promo-strip-links a:any-link {
+    padding: 14px 20px;
+  }
+}
+
+@media (width < 768px) {
+  .promo-strip.subnav .promo-strip-cta {
+    display: none;
+  }
+}

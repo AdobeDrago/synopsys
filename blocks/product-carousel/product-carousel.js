@@ -1,4 +1,5 @@
 import linkToImage, { wrapButtonLabels } from '../../scripts/scene7.js';
+import { inlineIcon } from '../../scripts/product.js';
 
 // expand chevron, inlined from /icons (the source's own 18x11 SVG)
 let chevron;
@@ -87,7 +88,138 @@ function decorateHeading(block) {
   h2.append(span);
 }
 
+// logo marquee timing measured on the source: row n scrolls -50% in DURATIONS[n] seconds
+const DURATIONS = [40, 30];
+
+/**
+ * Logos variant (product pages): each row of image links becomes an endlessly scrolling
+ * track. Items are duplicated once (hidden from assistive tech) so -50% loops seamlessly.
+ */
+function decorateLogos(block) {
+  const rows = document.createElement('div');
+  rows.className = 'product-carousel-rows';
+  [...block.children].forEach((row, r) => {
+    const track = document.createElement('div');
+    track.className = 'product-carousel-marquee';
+    track.style.animationDuration = `${DURATIONS[r % DURATIONS.length]}s`;
+    const items = [...row.children].map((cell) => {
+      const item = document.createElement('div');
+      item.className = 'product-carousel-logo';
+      const img = linkToImage(cell);
+      if (img) item.append(img);
+      return item;
+    }).filter((item) => item.children.length);
+    items.forEach((item) => track.append(item));
+    items.forEach((item) => {
+      const copy = item.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      track.append(copy);
+    });
+    rows.append(track);
+  });
+  const fadeStart = document.createElement('div');
+  fadeStart.className = 'product-carousel-fade product-carousel-fade-start';
+  const fadeEnd = document.createElement('div');
+  fadeEnd.className = 'product-carousel-fade product-carousel-fade-end';
+  block.replaceChildren(fadeStart, fadeEnd, rows);
+}
+
+/**
+ * Gallery variant (product pages): image | title, text, link per row. Cards scroll
+ * sideways with prev/next buttons; the text and the "Explore" label reveal on hover.
+ */
+function decorateGallery(block) {
+  const track = document.createElement('div');
+  track.className = 'product-carousel-gallery-track';
+  [...block.children].forEach((row) => {
+    const [media, body] = row.children;
+    const link = body && body.querySelector('a');
+    const card = document.createElement(link ? 'a' : 'div');
+    card.className = 'product-carousel-card';
+    if (link) {
+      card.href = link.href;
+      link.closest('p')?.remove();
+    }
+    const heading = body && body.querySelector('h2, h3, h4');
+    if (heading) card.setAttribute('aria-label', heading.textContent.trim());
+
+    const mediaBox = document.createElement('div');
+    mediaBox.className = 'product-carousel-card-media';
+    const img = media ? linkToImage(media) : null;
+    if (img) mediaBox.append(img);
+    const content = document.createElement('div');
+    content.className = 'product-carousel-card-body';
+    const header = document.createElement('div');
+    header.className = 'product-carousel-card-header';
+    if (heading) header.append(heading);
+    const text = document.createElement('div');
+    text.className = 'product-carousel-card-text';
+    const inner = document.createElement('div');
+    if (body) inner.append(...body.children);
+    text.append(inner);
+    header.append(text);
+    const pill = document.createElement('span');
+    pill.className = 'product-carousel-card-pill';
+    const label = document.createElement('span');
+    label.className = 'product-carousel-card-label';
+    label.textContent = link ? link.textContent.trim() : '';
+    pill.append(label, inlineIcon('p-explore', 'product-carousel-card-icon'));
+    content.append(header, pill);
+    const article = document.createElement('article');
+    article.append(mediaBox, content);
+    card.append(article);
+    track.append(card);
+  });
+
+  const viewport = document.createElement('div');
+  viewport.className = 'product-carousel-gallery-viewport';
+  const fadeStart = document.createElement('div');
+  fadeStart.className = 'product-carousel-gallery-fade product-carousel-gallery-fade-start';
+  const fadeEnd = document.createElement('div');
+  fadeEnd.className = 'product-carousel-gallery-fade product-carousel-gallery-fade-end';
+  viewport.append(track, fadeStart, fadeEnd);
+
+  const controls = document.createElement('div');
+  controls.className = 'product-carousel-gallery-controls';
+  const button = (dir, labelText) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', labelText);
+    b.append(inlineIcon(`p-${dir}`, 'product-carousel-gallery-icon'));
+    b.addEventListener('click', () => {
+      const card = track.querySelector('.product-carousel-card');
+      const step = card ? card.getBoundingClientRect().width + 24 : track.clientWidth;
+      track.scrollBy({ left: dir === 'next' ? step : -step, behavior: 'smooth' });
+    });
+    return b;
+  };
+  const prev = button('prev', 'Previous');
+  const next = button('next', 'Next');
+  controls.append(prev, next);
+
+  const update = () => {
+    const max = track.scrollWidth - track.clientWidth - 1;
+    prev.disabled = track.scrollLeft <= 0;
+    next.disabled = track.scrollLeft >= max;
+    fadeStart.classList.toggle('visible', track.scrollLeft > 0);
+    fadeEnd.classList.toggle('visible', track.scrollLeft < max);
+    controls.hidden = max <= 0;
+  };
+  track.addEventListener('scroll', update, { passive: true });
+  new ResizeObserver(update).observe(track);
+  block.replaceChildren(viewport, controls);
+  update();
+}
+
 export default function decorate(block) {
+  if (block.classList.contains('gallery')) {
+    decorateGallery(block);
+    return;
+  }
+  if (block.classList.contains('logos')) {
+    decorateLogos(block);
+    return;
+  }
   decorateHeading(block);
   const viewport = document.createElement('div');
   viewport.className = 'product-carousel-viewport';
